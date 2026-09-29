@@ -19,11 +19,11 @@ export const impact = {
 };
 
 export const homepageServices = [
-  { title: 'Design & visualisation', image: 'planning.png', alt: 'TM Concepts team planning a venue layout and event design', description: 'Floor plans, stage concepts and 3D views. See the experience before we build it.', href: '#/design', tags: 'IDEAS / SPACES / 3D' },
-  { title: 'Technical production', image: 'live-stage.png', alt: 'Production crew setting up a live event stage and technical equipment', description: 'The stage, the structure and the show. Every technical detail, working together.', href: '#/production', tags: 'STAGE / SET / RIGGING' },
-  { title: 'Sound, light & screens', image: 'concert.png', alt: 'Live concert with sound, lighting and large LED screens', description: 'Immersive sound, expressive lighting and visuals that bring your message to life.', href: '#/production', tags: 'AUDIO / LIGHTING / LED' },
-  { title: 'Event rentals', image: 'reception.png', alt: 'Elegant event reception furnished with lounge seating and dining tables', description: 'The right equipment and furniture, selected to complete your event environment.', href: '#/rentals', tags: 'FURNITURE / EQUIPMENT / AV' },
-  { title: 'Event branding & signage', image: 'branding.png', alt: 'Branded event registration area with directional signage and TM Concepts staff', description: 'Branded environments and clear wayfinding make every guest arrival feel considered.', href: '#/production', tags: 'BRANDING / SIGNAGE / WAYFINDING' },
+  { title: 'Design & visualisation', image: 'planning.png', alt: 'Illustrative event design and venue planning visual', description: 'Floor plans, stage concepts and 3D views. See the experience before we build it.', href: '#/services/event-design-3d-visualisation', tags: 'IDEAS / SPACES / 3D' },
+  { title: 'Technical production', image: 'live-stage.png', alt: 'Illustrative event stage and technical production visual', description: 'The stage, the structure and the show. Every technical detail, working together.', href: '#/services/technical-production', tags: 'STAGE / SET / RIGGING' },
+  { title: 'Sound, light & screens', image: 'concert.png', alt: 'Illustrative concert sound, lighting and LED visual', description: 'Immersive sound, expressive lighting and visuals that bring your message to life.', href: '#/services/audio-systems', tags: 'AUDIO / LIGHTING / LED' },
+  { title: 'Event rentals', image: 'reception.png', alt: 'Illustrative event furniture and lounge setup', description: 'The right equipment and furniture, selected to complete your event environment.', href: '#/services/furniture-event-rentals', tags: 'FURNITURE / EQUIPMENT / AV' },
+  { title: 'Event branding & signage', image: 'branding.png', alt: 'Illustrative event branding and signage visual', description: 'Branded environments and clear wayfinding make every guest arrival feel considered.', href: '#/services/event-branding-signage', tags: 'BRANDING / SIGNAGE / WAYFINDING' },
 ];
 
 export const media = {

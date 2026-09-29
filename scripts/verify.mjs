@@ -2,6 +2,7 @@ import { chromium } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';
+import { servicePages } from '../src/data.js';
 
 await mkdir('artifacts', {recursive:true});
 const browser = await chromium.launch({channel:'chrome',headless:true});
@@ -18,12 +19,19 @@ try {
   await page.evaluate(()=>document.fonts.ready);
   await page.screenshot({path:'artifacts/home-desktop.jpg',type:'jpeg',quality:75});
   await page.screenshot({path:'artifacts/home-full.jpg',type:'jpeg',quality:65,fullPage:true});
-  for(const route of ['/','/work','/work/after-dark','/design','/production','/rentals','/about']){
+  for(const route of ['/','/work','/work/after-dark','/design','/production','/rentals','/about','/services',...servicePages.map(service=>`/services/${service.slug}`)]){
     await page.goto(`${origin}/#${route}`);
     await page.locator('h1').waitFor();
     await page.evaluate(async()=>{await document.fonts.ready;document.querySelectorAll('img').forEach(img=>img.loading='eager');await Promise.all([...document.images].map(img=>img.complete?Promise.resolve():new Promise(r=>{img.onload=r;img.onerror=r;})));});
     check(`Desktop route ${route} has no overflow`,await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
     check(`Images on ${route} loaded`,await page.locator('img').evaluateAll(imgs=>imgs.every(i=>i.naturalWidth>0)));
+  }
+  await page.goto(`${origin}/#/services`);
+  check('Services overview lists all 13 service destinations',await page.locator('.service-catalog-card').count()===13&&await page.locator('.service-catalog-card').evaluateAll(cards=>cards.every(card=>card.getAttribute('href')?.startsWith('#/services/'))));
+  for(const service of servicePages){
+    await page.goto(`${origin}/#/services/${service.slug}`);
+    check(`${service.title} uses its SEO title`,await page.title()===service.seoTitle);
+    check(`${service.title} has all scope details`,await page.locator('.service-scope-list li').count()===service.details.length);
   }
   await page.goto(`${origin}/#/production`);
   check('Production page lists each detailed service',await page.locator('.service-detail').count()>=11);
@@ -108,7 +116,7 @@ try {
   audits.push({page:'home-desktop',...(await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze())});
   await page.setViewportSize({width:390,height:844});
   await page.screenshot({path:'artifacts/home-mobile.jpg',type:'jpeg',quality:75});
-  for(const route of ['/','/work','/design','/production','/rentals','/about','/work/after-dark']){
+  for(const route of ['/','/work','/design','/production','/rentals','/about','/work/after-dark','/services',...servicePages.map(service=>`/services/${service.slug}`)]){
     await page.goto(`${origin}/#${route}`);
     await page.locator('h1').waitFor();
     check(`Mobile ${route} has no overflow`,await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
@@ -116,7 +124,7 @@ try {
   await page.getByRole('button',{name:'Open navigation menu'}).click();
   const menu=page.getByRole('dialog',{name:'Site navigation'});
   check('Mobile menu opens',await menu.isVisible());
-  await menu.getByRole('link',{name:'Rentals'}).click();
+  await menu.getByRole('link',{name:'05 Rentals',exact:true}).click();
   check('Mobile menu navigates and closes',!await menu.isVisible()&&page.url().endsWith('#/rentals'));
   await page.getByRole('button',{name:'START A PROJECT',exact:true}).first().click();
   check('Mobile form has no overflow',await form.evaluate(el=>el.scrollWidth<=el.clientWidth));
