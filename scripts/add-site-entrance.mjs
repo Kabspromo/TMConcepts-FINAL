@@ -1,0 +1,10 @@
+import { readFile, writeFile } from 'node:fs/promises';
+let main=await readFile('src/main.jsx','utf8');
+main=main.replace("import App from './App.jsx';", "import App from './App.jsx';\nimport SiteEntrance from './SiteEntrance.jsx';");
+main=main.replace("import './home-sections.css';", "import './home-sections.css';\nimport './site-entrance.css';");
+main=main.replace('<React.StrictMode><App /></React.StrictMode>', '<React.StrictMode><SiteEntrance><App /></SiteEntrance></React.StrictMode>');
+await writeFile('src/main.jsx',main);
+let html=await readFile('index.html','utf8');
+html=html.replace('<meta name="theme-color"', '<link rel="preload" href="/images/tm-logo.png" as="image" />\n    <style>html,body{margin:0;background:#080808}</style>\n    <meta name="theme-color"');
+await writeFile('index.html',html);
+console.log('Opening animation connected.');

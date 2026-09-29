@@ -1,0 +1,1 @@
+The About page generates and downloads the TM Concepts company profile as a PDF when visitors select the Company Profile button. No static PDF file is required in this folder.
