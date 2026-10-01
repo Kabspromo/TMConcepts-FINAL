@@ -11,23 +11,23 @@ export const clientShowcase = {
 
 export const impact = {
   stats: [
-    { value: 200, suffix: '+', label: 'Events Delivered', detail: 'Thoughtfully designed and produced.' },
-    { value: 15, suffix: '+', label: 'Years Experience', detail: 'Creative vision, backed by experience.' },
-    { value: 50, suffix: '+', label: 'Corporate Clients', detail: 'Trusted to bring important events to life.' },
-    { value: 100, suffix: '%', label: 'Satisfaction Rate', detail: 'Every detail matters.' },
+    { value: 50, suffix: '+', label: 'Events Delivered', detail: 'Thoughtfully designed and produced.' },
+    { value: 3, suffix: '+', label: 'Years of Experience', detail: 'Creative vision, backed by experience.' },
+    { value: 10, suffix: '+', label: 'Clients', detail: 'Trusted to bring important events to life.' },
+    { value: 80, suffix: '%', label: 'Satisfaction Rate', detail: 'Every detail matters.' },
   ],
 };
 
 export const homepageServices = [
-  { title: 'Design & visualisation', image: 'planning.png', alt: 'Illustrative event design and venue planning visual', description: 'Floor plans, stage concepts and 3D views. See the experience before we build it.', href: '#/services/event-design-3d-visualisation', tags: 'IDEAS / SPACES / 3D' },
-  { title: 'Technical production', image: 'live-stage.png', alt: 'Illustrative event stage and technical production visual', description: 'The stage, the structure and the show. Every technical detail, working together.', href: '#/services/technical-production', tags: 'STAGE / SET / RIGGING' },
-  { title: 'Sound, light & screens', image: 'concert.png', alt: 'Illustrative concert sound, lighting and LED visual', description: 'Immersive sound, expressive lighting and visuals that bring your message to life.', href: '#/services/audio-systems', tags: 'AUDIO / LIGHTING / LED' },
-  { title: 'Event rentals', image: 'reception.png', alt: 'Illustrative event furniture and lounge setup', description: 'The right equipment and furniture, selected to complete your event environment.', href: '#/services/furniture-event-rentals', tags: 'FURNITURE / EQUIPMENT / AV' },
-  { title: 'Event branding & signage', image: 'branding.png', alt: 'Illustrative event branding and signage visual', description: 'Branded environments and clear wayfinding make every guest arrival feel considered.', href: '#/services/event-branding-signage', tags: 'BRANDING / SIGNAGE / WAYFINDING' },
+  { title: 'Design & visualisation', image: 'WhatsApp%20Image%202026-09-30%20at%202.24.59%20PM.jpeg', alt: 'Event design and venue planning photography', description: 'Floor plans, stage concepts and 3D views. See the experience before we build it.', href: '#/services/event-design-3d-visualisation', tags: 'IDEAS / SPACES / 3D' },
+  { title: 'Technical production', image: 'WhatsApp%20Image%202026-09-30%20at%202.24.59%20PM%20(1).jpeg', alt: 'Technical event production photography', description: 'The stage, the structure and the show. Every technical detail, working together.', href: '#/services/technical-production', tags: 'STAGE / SET / RIGGING' },
+  { title: 'Sound, light & screens', image: 'WhatsApp%20Image%202026-09-30%20at%202.24.59%20PM%20(2).jpeg', alt: 'Concert sound, lighting and LED photography', description: 'Immersive sound, expressive lighting and visuals that bring your message to life.', href: '#/services/audio-systems', tags: 'AUDIO / LIGHTING / LED' },
+  { title: 'Event rentals', image: 'WhatsApp%20Image%202026-09-30%20at%202.24.58%20PM.jpeg', alt: 'Event furniture and lounge setup photography', description: 'The right equipment and furniture, selected to complete your event environment.', href: '#/services/furniture-event-rentals', tags: 'FURNITURE / EQUIPMENT / AV' },
+  { title: 'Event branding & signage', image: 'WhatsApp%20Image%202026-09-30%20at%202.24.58%20PM%20(2).jpeg', alt: 'Event branding and signage photography', description: 'Branded environments and clear wayfinding make every guest arrival feel considered.', href: '#/services/event-branding-signage', tags: 'BRANDING / SIGNAGE / WAYFINDING' },
 ];
 
 export const media = {
-  hero: { src: '/videos/tm.mp4', poster: '/images/live-stage.png' },
-  showreel: { src: '/videos/stage-showreel-web.mp4', poster: '/images/stage-showreel.png' },
-  design: { src: '/videos/fr.mp4', poster: '/images/planning.png' },
+  hero: { src: '/videos/event-atmosphere-web.mp4', poster: '/images/WhatsApp%20Image%202026-09-30%20at%202.24.59%20PM.jpeg' },
+  showreel: { src: '/videos/stage-showreel-web.mp4', poster: '/images/WhatsApp%20Image%202026-09-30%20at%202.24.58%20PM.jpeg' },
+  design: { src: '/videos/fr.mp4', poster: '/images/WhatsApp%20Image%202026-09-30%20at%202.24.59%20PM%20(1).jpeg' },
 };

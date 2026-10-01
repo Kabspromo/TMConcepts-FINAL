@@ -1,9 +1,10 @@
 import React from 'react';
-import { createRoot } from 'react-dom/client';
+import { createRoot, hydrateRoot } from 'react-dom/client';
 import App from './App.jsx';
-import SiteEntrance from './SiteEntrance.jsx';
 import './styles.css';
-import './home-sections.css';
-import './site-entrance.css';
+import './homepage-polish.css';
 
-createRoot(document.getElementById('root')).render(<React.StrictMode><SiteEntrance><App /></SiteEntrance></React.StrictMode>);
+const root=document.getElementById('root');
+const app=<React.StrictMode><App initialPath={document.documentElement.dataset.page || undefined}/></React.StrictMode>;
+if(root.hasChildNodes())hydrateRoot(root,app);
+else createRoot(root).render(app);

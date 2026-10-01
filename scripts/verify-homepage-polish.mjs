@@ -1,0 +1,98 @@
+import {chromium} from '@playwright/test';
+import assert from 'node:assert/strict';
+import {mkdir,writeFile} from 'node:fs/promises';
+import {routes} from '../src/content.js';
+import {homeStats,clientLogos} from '../src/homepageContent.js';
+const origin=process.env.TM_TEST_ORIGIN||'http://127.0.0.1:4173';
+await mkdir('artifacts/polish',{recursive:true});
+const browser=await chromium.launch({channel:'chrome',headless:true});
+const context=await browser.newContext({viewport:{width:1440,height:1000}});
+const page=await context.newPage(),checks=[],errors=[];
+page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
+const check=(name,condition)=>{assert.ok(condition,name);checks.push(name);};
+const active=()=>page.locator('.hero-slider').getAttribute('data-active-slide');
+const decode=async()=>page.evaluate(async()=>{await document.fonts.ready;document.querySelectorAll('img').forEach(i=>i.loading='eager');await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));await Promise.all([...document.images].map(i=>i.decode().catch(()=>{})));});
+try{
+ await page.goto(origin+'/');
+ await page.waitForFunction(()=>document.querySelector('.hero-slider')?.classList.contains('is-playing'));
+ check('Four hero slides',await page.locator('.hero-slide').count()===4);
+ check('First hero image is eager and high priority',await page.locator('.hero-slide img').first().getAttribute('fetchpriority')==='high');
+ await page.waitForFunction(()=>document.querySelector('.hero-slider')?.dataset.activeSlide==='1',{},{timeout:8500});
+ check('Hero advances automatically after six seconds',await active()==='1');
+ await page.mouse.move(500,350);
+ check('Hero pauses on mouse hover',await page.locator('.hero-slider').evaluate(el=>el.classList.contains('is-paused')));
+ const pausedSlide=await active();await page.waitForTimeout(6200);
+ check('Hovered hero remains on the same image',await active()===pausedSlide);
+ await page.mouse.move(500,30);
+ await page.getByRole('button',{name:'Show slide 4: Paediatric conference'}).click();
+ check('Manual indicators change slides and pause',await active()==='3'&&await page.getByRole('button',{name:'Play slideshow',exact:true}).count()===1);
+ await page.getByRole('button',{name:'Show slide 4: Paediatric conference'}).press('ArrowRight');
+ check('Hero arrow keys wrap to the first slide',await active()==='0');
+ await page.getByRole('button',{name:'Play slideshow',exact:true}).click();await page.mouse.move(500,30);
+ await page.waitForFunction(()=>document.querySelector('.hero-slider').classList.contains('is-playing'));
+ await page.evaluate(()=>{Object.defineProperty(document,'hidden',{configurable:true,get:()=>true});document.dispatchEvent(new Event('visibilitychange'));});
+ await page.waitForFunction(()=>document.querySelector('.hero-slider').classList.contains('is-paused'));
+ check('Hidden document pauses slideshow',await page.locator('.hero-slider').evaluate(el=>el.classList.contains('is-paused')));
+ await page.evaluate(()=>{delete document.hidden;document.dispatchEvent(new Event('visibilitychange'));});
+ await page.locator('.impact-stats').evaluate(el=>window.scrollTo({top:el.offsetTop-110,behavior:'instant'}));
+ await page.waitForFunction(()=>document.querySelector('.hero-slider').classList.contains('is-paused'));
+ check('Off-screen slideshow pauses',true);
+ const middle=await page.locator('.impact-stat>strong').allTextContents();await page.waitForTimeout(1950);
+ const finished=await page.locator('.impact-stat>strong').allTextContents();
+ check('Counters finish at the configured figures',finished.join('|')===homeStats.map(s=>s.value+s.suffix).join('|'));
+ check('Counters animate into their final values',middle.join('|')!==finished.join('|'));
+ await page.locator('.vision-section').scrollIntoViewIfNeeded();
+ await page.locator('.impact-stats').scrollIntoViewIfNeeded();
+ check('Counters do not restart when re-entering view',(await page.locator('.impact-stat>strong').allTextContents()).join('|')===finished.join('|'));
+ check('Client logo sequence is duplicated',await page.locator('.client-group').count()===2&&await page.locator('.client-logo').count()===clientLogos.length*2);
+ await page.getByRole('button',{name:'Pause client logos'}).click();
+ check('Client logos have a working pause control',await page.locator('.client-track').evaluate(el=>getComputedStyle(el).animationPlayState==='paused'));
+ const slider=page.getByRole('slider',{name:'Compare event design and final visualisation'});
+ await slider.scrollIntoViewIfNeeded();await decode();
+ const bounds=await slider.boundingBox();
+ await page.mouse.move(bounds.x+bounds.width*.25,bounds.y+bounds.height*.5);await page.mouse.down();await page.mouse.move(bounds.x+bounds.width*.78,bounds.y+bounds.height*.5,{steps:12});await page.mouse.up();
+ check('Mouse drag reveals the design at the handle position',Math.abs(Number(await slider.inputValue())-78)<=1);
+ await slider.press('Home');check('Comparison supports Home key',await slider.inputValue()==='0');
+ await slider.press('End');check('Comparison supports End key',await slider.inputValue()==='100');
+ await slider.press('ArrowLeft');check('Comparison supports arrow keys',await slider.inputValue()==='99');
+ await slider.fill('50');
+ await page.screenshot({path:'artifacts/polish/comparison-final-desktop.jpg',quality:85});
+ await page.locator('.build-actions .button').click();check('Event design CTA opens the existing project brief',await page.locator('.project-dialog').isVisible());await page.keyboard.press('Escape');
+ await page.emulateMedia({reducedMotion:'reduce'});await page.goto(origin+'/');await decode();
+ check('Reduced motion pauses hero',await page.getByRole('button',{name:'Slideshow paused for reduced motion'}).isDisabled());
+ check('Reduced motion disables logo animation',await page.locator('.client-track').evaluate(el=>getComputedStyle(el).animationName==='none'));
+ check('Reduced motion disables light animation',await page.locator('.stage-light-ambient>span').first().evaluate(el=>getComputedStyle(el).animationName==='none'));
+ check('Reduced motion keeps vision text visible',await page.locator('.vision-line').evaluateAll(nodes=>nodes.every(n=>getComputedStyle(n).opacity==='1'&&getComputedStyle(n).transform==='none')));
+ await page.screenshot({path:'artifacts/polish/final-home-desktop.jpg',quality:85});
+ await page.screenshot({path:'artifacts/polish/final-home-full.jpg',fullPage:true,quality:72});
+ for(const width of [360,375,390,412,430,768,1024,1440,1920]){
+  await page.setViewportSize({width,height:width<700?844:1000});await page.goto(origin+'/');await decode();
+  const metrics=await page.evaluate(()=>{const hero=document.querySelector('.hero-slider'),h=document.querySelector('.hero-slider h1'),a=document.querySelector('.hero-actions'),footer=document.querySelector('.hero-slider-footer');return {font:parseFloat(getComputedStyle(h).fontSize),aBottom:a.getBoundingClientRect().bottom,footerTop:footer.getBoundingClientRect().top,overflow:document.documentElement.scrollWidth>innerWidth,statCols:getComputedStyle(document.querySelector('.impact-stats')).gridTemplateColumns.split(' ').length,serviceCols:getComputedStyle(document.querySelector('.homepage-services .service-grid')).gridTemplateColumns.split(' ').length,group:document.querySelector('.client-group').getBoundingClientRect().width,viewport:document.querySelector('.client-viewport').getBoundingClientRect().width,heroBottom:hero.getBoundingClientRect().bottom,overlapsChat:[...document.querySelectorAll('.hero-controls button,.hero-explore')].filter(el=>getComputedStyle(el).display!=='none').some(el=>{const a=el.getBoundingClientRect(),b=document.querySelector('.whatsapp-float').getBoundingClientRect();return a.width>0&&a.left<b.right&&a.right>b.left&&a.top<b.bottom&&a.bottom>b.top;})};});
+  check(width+'px no overflow or hero controls overlap',!metrics.overflow&&metrics.aBottom+15<metrics.footerTop);
+  check(width+'px logo sequence fills its viewport',metrics.group>=metrics.viewport-1);
+  check(width+'px hero controls stay clear of WhatsApp',!metrics.overlapsChat);
+  if(width<700){check(width+'px 2x2 counters and one service column',metrics.statCols===2&&metrics.serviceCols===1);check(width+'px hero font within 42–54px',metrics.font>=42&&metrics.font<=54);}
+  if(width===390){await page.screenshot({path:'artifacts/polish/final-home-mobile.jpg',quality:85});await page.screenshot({path:'artifacts/polish/final-home-mobile-full.jpg',fullPage:true,quality:72});}
+ }
+ const touchContext=await browser.newContext({viewport:{width:390,height:844},hasTouch:true,isMobile:true,reducedMotion:'reduce'});
+ const touch=await touchContext.newPage();await touch.goto(origin+'/');
+ const cdp=await touchContext.newCDPSession(touch);
+ const swipe=async(x1,y1,x2,y2)=>{await cdp.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x:x1,y:y1}]});for(let i=1;i<=8;i++)await cdp.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x:x1+(x2-x1)*i/8,y:y1+(y2-y1)*i/8}]});await cdp.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});};
+ await swipe(300,310,90,310);check('Mobile hero supports real touch swipe',await touch.locator('.hero-slider').getAttribute('data-active-slide')==='1');
+ await swipe(90,310,300,310);check('Mobile swipe can return to the previous image',await touch.locator('.hero-slider').getAttribute('data-active-slide')==='0');
+ const touchSlider=touch.getByRole('slider',{name:'Compare event design and final visualisation'});await touchSlider.scrollIntoViewIfNeeded();
+ const tb=await touchSlider.boundingBox();await swipe(tb.x+tb.width*.3,tb.y+tb.height*.5,tb.x+tb.width*.75,tb.y+tb.height*.5);
+ check('Comparison supports real touch dragging',Math.abs(Number(await touchSlider.inputValue())-75)<=2);
+ await touch.locator('.client-viewport').scrollIntoViewIfNeeded();const cb=await touch.locator('.client-viewport').boundingBox();
+ await swipe(cb.x+cb.width*.8,cb.y+cb.height*.5,cb.x+cb.width*.2,cb.y+cb.height*.5);
+ check('Client logos can be swiped horizontally',await touch.locator('.client-viewport').evaluate(el=>el.scrollLeft)>0);
+ await touchContext.close();
+ for(const route of routes){
+  await page.goto(origin+route);
+  const visible=await page.locator('main').innerText();
+  check('Finished public copy '+route,!/\breplace (?:with|image)|add (?:your )?image|insert photo|placeholder|coming later|coming next|temporary|\bTODO\b|\bsample\b|\bdemo\b|will be added|photographs are being added/i.test(visible));
+ }
+ check('No browser errors',errors.length===0);
+ await writeFile('artifacts/polish/interaction-results.json',JSON.stringify({passed:checks.length,checks,errors},null,2));
+ console.log('PASS '+checks.length+' homepage interaction, responsive, motion and content checks.');
+}catch(error){await page.screenshot({path:'artifacts/polish/interaction-failure.jpg',quality:75});await writeFile('artifacts/polish/interaction-failure.json',JSON.stringify({message:error.message,checks,errors,url:page.url()},null,2));throw error;}finally{await browser.close();}

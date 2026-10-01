@@ -1,81 +1,83 @@
 # TM Concepts
 
-A cinematic, responsive website for TM Concepts, Kampala. Built with React, Vite and locally hosted imagery and fonts.
+React 19 / Vite website for TM Concepts, Ntinda, Kampala, Uganda.
 
 ## Run locally
 
-```sh
+~~~sh
 npm install
 npm run dev
-```
+~~~
 
-Open **http://127.0.0.1:5173**.
+Development: http://127.0.0.1:5173
 
-```sh
+~~~sh
 npm run build
 npm run preview
-```
+~~~
 
-`dist/` is the production output. It can be hosted on a static website host. The site uses hash routes, so its inner pages work without server rewrite rules. Deploy at the domain root; asset URLs are absolute.
+Production preview: http://127.0.0.1:4173
 
-## Included
+The build pre-renders 25 pages plus 404, with unique metadata, social cards, canonical URLs, structured data, sitemap and robots.txt. React hydrates the interactions. The existing framework, Vercel configuration, production domain and Git remote are preserved. This work has not been deployed.
 
-- Responsive homepage, concepts/work listing, individual concept pages, 3D design, production, rentals and about pages.
-- The supplied logo, monochrome typography, atmospheric imagery, restrained transitions and reduced-motion support.
-- Interactive wireframe/lighting comparison, five-stage production sequence, keyboard-accessible process tabs and perspective control.
-- Filterable and searchable production inventory with equipment detail dialogs, selection and adjustable quantities.
-- Four-step event brief builder with field validation, optional local file selection, review and text download.
-- WhatsApp enquiry handoff to **+256 704 282 211**. The prepared message includes event details, services, equipment quantities and contact details. The visitor reviews and sends it in WhatsApp.
-- Responsive navigation, modal focus handling, accessible labels, native date input and mobile WhatsApp action.
+## Edit the homepage
 
-## Content and launch notes
+- **src/homepageContent.js** — four hero slides and their mobile crops; client logos; the approved 3+, 10+, 50+, 80% figures; production links; reasons to choose TM Concepts.
+- **src/HomepagePolish.jsx** — homepage sequence and interactions.
+- **src/StageLightAmbient.jsx** — reusable decorative stage beams.
+- **src/homepage-polish.css** — homepage typography, editorial layout, animated borders, logo strip and responsive rules.
+- **src/content.js** — services, project collection, media metadata, comparison pair, contact details and legacy URL aliases.
+- **src/inventory.js** — equipment and furniture categories.
+- **src/components.jsx** — shared navigation, media, cards, comparison, work marquee, process, CTA and footer.
+- **src/ProjectBuilder.jsx** — enquiry steps, rental quantities, local attachments, brief download and WhatsApp handoff.
 
-The supplied brief is treated as a creative reference. The site uses the supplied Kampala location and contact number. No customer names, project credits, testimonials, completed-project counts or equipment model specifications have been invented.
+The homepage order is hero, clients, impact, vision, services, Build Your Event, featured work, production capabilities, Why TM Concepts and final CTA. The older HomeSections, homeContent and SiteEntrance files remain for preservation of earlier work; the app uses the files above.
 
-The project cards are explicitly labelled **concept studies**. Supplied event imagery illustrates concepts and is not evidence of TM Concepts commissions. Stage scenes and equipment graphics are original SVG illustrations. The production sequence is an illustrated presentation. The homepage also includes two licensed stock-footage clips: a muted Full HD video background and a playable Full HD showreel. These clips do not depict TM Concepts events. The comparison matches a wireframe and lighting concept; it does not claim a photographed event is the final version of that concept.
+The hero advances every six seconds, crossfades and supports swipe and keyboard arrows. Hover, keyboard focus, manual selection, off-screen state and hidden browser tabs pause it. Visitors can resume from the play control. Reduced motion disables autoplay, beams, moving borders and marquees. Counters run once for 1.8 seconds on entering view. The comparison supports pointer dragging, touch, arrow keys, Home and End.
 
-Use only authorised project photography, verified before/after pairs, venue-specific renders and approved company footage when representing completed work. Confirm equipment availability and business information before publishing. Social account links require approved URLs.
+## Media and provenance
 
-The builder has **no server-side submission, storage or email delivery**. Data stays in page memory until the visitor follows the WhatsApp link or downloads the brief. Files are not uploaded or transmitted: their names are included in the brief, with clear instructions to attach the actual files in WhatsApp. Refreshing the page clears the draft. A production upload/CRM workflow would require a backend and an agreed privacy policy.
+See PHOTOGRAPHY.md for source details and replacement instructions.
 
-## Edit content
+The event portfolio uses six supplied Rotary installation photographs and stills extracted from three supplied event videos. No AI-generated event images are used. Neutral TM panels handle missing or failed media without exposing editing instructions. Client logos come from the existing supplied logo folder.
 
-- `src/data.js`: services, concepts, equipment categories and phone/WhatsApp contact.
-- `src/App.jsx`: pages, navigation, content and interactive sections.
-- `src/ProjectBuilder.jsx`: event brief and WhatsApp handoff.
-- `src/StageScene.jsx`: original stage and equipment illustrations.
-- `src/styles.css`: responsive styling and motion preferences.
-- `public/images/`: supplied logo and illustrative photography.
+The comparison is a matched pair rendered from one furnished 3D scene: sofas, cocktail tables, conference chairs, stage, LED display, speakers, lights, truss and plants. Both views use the same model and camera. It is clearly labelled as design and final visualization, not as a completed event photograph. Three.js is a **development-only** rendering tool; it is not shipped in the website JavaScript.
+
+Manrope is locally hosted as a 54 KB WOFF2 under the SIL Open Font License. Icons use Lucide.
+
+## Media scripts
+
+~~~sh
+npm run media:prepare
+npm run media:homepage
+npm run media:design
+~~~
+
+The first command regenerates responsive versions of the six original photographs. The homepage command extracts video stills, prepares four hero files and optimizes supplied client logos. It requires the dev server on port 5173 and the original local uploads. It recreates the initial hero images, so do not run it over manually replaced hero files.
+
+The design command also requires the dev server on port 5173. It renders scripts/event-scene.mjs through Chrome into static WebP pairs. Runtime pages never load the rendering code.
+
+The production asset allowlist copies approved image folders and fonts. Original WhatsApp videos, large source uploads and development rendering scripts stay out of dist.
+
+## Enquiries and rentals
+
+Start a Project and the contact page share the preserved four-step brief builder. Event details, services, rental quantities, company, name, email, phone and message are included in a WhatsApp message for **+256 704 282 211**, or downloaded as a text brief.
+
+Nothing is sent automatically. Attachments are validated and listed locally; they are not uploaded or attached to WhatsApp automatically. The visitor attaches files and sends the final message in WhatsApp. Briefs remain in page memory, and refresh clears them. Equipment specifications, availability, crew, delivery and prices are confirmed by quotation.
 
 ## Verification
 
-```sh
-# Start the site first, then in a second terminal:
+With the production preview running:
+
+~~~sh
 npm test
-```
+npm run test:homepage
+~~~
 
-The verification script uses an installed Google Chrome via Playwright. It checks desktop/mobile layouts, all main routes and assets, equipment selection, form validation, brief content, download, keyboard interactions and axe accessibility audits. It never sends WhatsApp messages. Screenshots and results are saved to `artifacts/`.
+The main suite checks all 25 routes at 360, 375, 390, 412, 430, 768, 1024, 1440 and 1920 px, static SEO, loaded media, WCAG A/AA audits, navigation, legacy URLs, work filters, process tabs, rental search and quantities, enquiry validation, attachments, downloads and WhatsApp URL content.
 
-## Asset credits
+The homepage suite additionally exercises autoplay and pause behavior, real touch swipe, mouse/touch/keyboard comparison controls, counters, logo loops, reduced motion, CTA behavior, exact mobile typography bounds and finished public copy. No messages are sent.
 
-- TM Concepts logo: supplied by the user (`TM LOGO1.png`).
-- Supplied event imagery: concept and illustrative use; not documentation of completed TM Concepts commissions.
-- Manrope: Google Fonts, SIL Open Font License. The licence is included at `public/fonts/OFL.txt`.
-- Interface icons: Lucide React, ISC licence.
+Tests use locally installed Chrome, Playwright and axe. Results and screenshots go to artifacts/redesign and artifacts/polish. Set TM_TEST_ORIGIN for another preview origin. Original historical test scripts remain under test:legacy.
 
-This project is prepared locally and has not been published to a public host.
-
-## Homepage update
-
-- Home is visible in the desktop navigation, as a mobile header shortcut and in the full menu.
-- Client logos and company figures are omitted until approved brands and verified numbers are supplied.
-- A brief services section uses five supplied event photographs, with direct links to the relevant pages.
-- Featured events link to concert, conference and wedding concept pages.
-- Real Full HD stock footage is hosted locally; the hero video has a pause button and respects reduced-motion and data-saving preferences.
-- A recognisable WhatsApp icon floats at the bottom-right on every page, on desktop and mobile.
-
-Change homepage media and approved client logos in `src/homeContent.js`; add verified company figures there when available. Client logo entries require an approved logo image path.
-
-Video source pages and credits: [Mixkit DJ playing music on stage](https://mixkit.co/free-stock-video/dj-playing-music-on-stage-4026/) and [Mixkit DJ playing on a stage with LED screens](https://mixkit.co/free-stock-video/dj-playing-on-a-stage-with-led-screens-4187/). Asset details are recorded in `public/videos/CREDITS.md`.
-
-`npm test` covers the original user flows and homepage behavior, including Full HD playback, Home navigation and WhatsApp visibility at four screen widths.
+Production Core Web Vitals require measurements after deployment. The implementation uses static HTML, responsive WebP, lazy media, a prioritized hero, reserved dimensions, compressed local typography and CSS/IntersectionObserver motion to keep loading efficient.

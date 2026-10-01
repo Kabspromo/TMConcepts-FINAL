@@ -1,0 +1,65 @@
+{
+  "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/design",
+      "destination": "/services/event-design-3d-visualisation",
+      "permanent": true
+    },
+    {
+      "source": "/production",
+      "destination": "/services/technical-production",
+      "permanent": true
+    },
+    {
+      "source": "/services/lighting",
+      "destination": "/services/event-lighting",
+      "permanent": true
+    },
+    {
+      "source": "/services/furniture-event-rentals",
+      "destination": "/services/event-furniture-rentals",
+      "permanent": true
+    },
+    {
+      "source": "/services/conferences-corporate-events",
+      "destination": "/services/conference-production",
+      "permanent": true
+    },
+    {
+      "source": "/services/concerts-nightlife-live-events",
+      "destination": "/services/concerts-live-events",
+      "permanent": true
+    },
+    {
+      "source": "/work/after-dark",
+      "destination": "/work",
+      "permanent": true
+    },
+    {
+      "source": "/work/a-shared-moment",
+      "destination": "/work",
+      "permanent": true
+    },
+    {
+      "source": "/work/beyond-the-stage",
+      "destination": "/work",
+      "permanent": true
+    },
+    {
+      "source": "/work/in-the-moment",
+      "destination": "/work",
+      "permanent": true
+    },
+    {
+      "source": "/work/corporate-summit",
+      "destination": "/work",
+      "permanent": true
+    },
+    {
+      "source": "/work/wedding-reception",
+      "destination": "/work",
+      "permanent": true
+    }
+  ]
+}

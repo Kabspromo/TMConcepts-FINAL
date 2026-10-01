@@ -5,11 +5,15 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 127.0.0.1",
-    "build": "vite build",
+    "build": "node scripts/generate-og.mjs && vite build && vite build --ssr src/entry-server.jsx --outDir .prerender && node scripts/prerender.mjs",
     "preview": "vite preview --host 127.0.0.1",
-    "test": "node scripts/verify.mjs && node scripts/verify-homepage.mjs",
-    "test:homepage": "node scripts/verify-homepage.mjs",
-    "test:pages": "node scripts/audit-pages.mjs"
+    "test": "node scripts/verify-redesign.mjs",
+    "test:homepage": "node scripts/verify-homepage-polish.mjs",
+    "test:pages": "node scripts/verify-redesign.mjs",
+    "media:prepare": "node scripts/prepare-media.mjs",
+    "test:legacy": "node scripts/verify.mjs && node scripts/verify-homepage.mjs",
+    "media:homepage": "node scripts/prepare-homepage-media.mjs",
+    "media:design": "node scripts/render-event-scene.mjs"
   },
   "dependencies": {
     "jspdf": "^4.2.1",
@@ -21,6 +25,9 @@
     "@axe-core/playwright": "^4.13.0",
     "@playwright/test": "^1.63.0",
     "@vitejs/plugin-react": "^4.3.4",
-    "vite": "^6.0.7"
+    "sharp": "^0.35.5",
+    "three": "^0.186.1",
+    "vite": "^6.0.7",
+    "wawoff2": "^2.0.1"
   }
 }
