@@ -3,6 +3,7 @@ import {dirname,join} from 'node:path';
 import {render} from '../.prerender/entry-server.js';
 import {routes,SITE_URL} from '../src/content.js';
 import {getSEO} from '../src/seo.js';
+import {workVideos} from '../src/workVideos.js';
 const template=await readFile('dist/index.html','utf8');
 const escape=s=>String(s).replaceAll('&','&amp;').replaceAll('"','&quot;').replaceAll('<','&lt;').replaceAll('>','&gt;');
 for(const path of [...routes,'/404']) {
@@ -16,7 +17,14 @@ for(const path of [...routes,'/404']) {
   await mkdir(dirname(file),{recursive:true});await writeFile(file,html);
 }
 for(const folder of ['fonts','images/projects','images/hero','images/clients/optimized','images/services','images/equipment','images/team','images/about','images/design','images/brand','images/og'])await cp('public/'+folder,'dist/'+folder,{recursive:true});
+for(const video of workVideos){
+  for(const src of [video.src,video.poster]){
+    const asset=decodeURIComponent(src);
+    await mkdir(dirname('dist'+asset),{recursive:true});
+    await cp('public'+asset,'dist'+asset);
+  }
+}
 await cp('public/favicon.svg','dist/favicon.svg');
 await writeFile('dist/robots.txt','User-agent: *\nAllow: /\nSitemap: '+SITE_URL+'/sitemap.xml\n');
 await writeFile('dist/sitemap.xml','<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+routes.map(path=>'<url><loc>'+SITE_URL+(path==='/'?'/':path)+'</loc></url>').join('')+'</urlset>');
-console.log('Pre-rendered '+routes.length+' pages plus 404. Production assets include only approved images and required fonts.');
+console.log('Pre-rendered '+routes.length+' pages plus 404. Production assets include approved images, selected real event videos and required fonts.');

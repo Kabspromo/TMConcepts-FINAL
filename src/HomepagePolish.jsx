@@ -5,6 +5,7 @@ import {projects,servicePages} from './content';
 import {SectionLabel,Watermark,ServiceGrid,Photo,ProjectCard,BeforeAfterSlider,CTASection} from './components';
 import {aboutCompany} from './aboutContent';
 import StageLightAmbient from './StageLightAmbient';
+import WorkVideoShowcase from './WorkVideoShowcase';
 
 function useReducedMotion(){
   const [reduced,setReduced]=useState(true);
@@ -63,5 +64,5 @@ export function WhyTM(){
  return <section className="why-section section-padding light"><div className="why-intro"><SectionLabel number="06">WHY TM CONCEPTS</SectionLabel><h2>WE DESIGN<br/>THE EXPERIENCE.<br/><span>BEFORE WE BUILD IT.</span></h2><p className="home-company-intro">{aboutCompany.introduction}</p><a className="text-link" href="/about">MEET YOUR PRODUCTION PARTNER <ArrowUpRight size={19}/></a></div><div className="why-list">{whyTM.map((item,i)=><article key={item.title}><span>0{i+1}</span><div><h3>{item.title}</h3><p>{item.text}</p></div></article>)}</div><div className="about-home-images"><figure><Photo photo="stage" sizes="(max-width:700px) 100vw, 60vw"/><figcaption>THE COMPLETE EVENT ENVIRONMENT</figcaption></figure><figure><Photo photo="awards" sizes="(max-width:700px) 100vw, 40vw"/><figcaption>THE LIVE MOMENT / ROTARY INSTALLATION</figcaption></figure></div></section>;
 }
 export default function PolishedHome({startProject}){
- return <><HeroSlider startProject={startProject}/><ClientMarquee/><ImpactStats/><VisionStatement/><section className="services-section homepage-services section-padding light"><SectionLabel number="02">OUR SERVICES</SectionLabel><div className="section-intro"><h2>DESIGN. BUILD.<br/>POWER. DELIVER.</h2><p>Creative ideas meet technical expertise.<br/>Every part of your production, considered.</p></div><ServiceGrid items={servicePages.slice(0,11)}/><a className="button dark section-end-link" href="/services">EXPLORE ALL SERVICES <ArrowUpRight size={19}/></a></section><BuildYourEvent startProject={startProject}/><FeaturedWork/><ProductionCapabilities/><WhyTM/><CTASection startProject={startProject}/></>;
+ return <><HeroSlider startProject={startProject}/><WorkVideoShowcase/><ClientMarquee/><ImpactStats/><VisionStatement/><section className="services-section homepage-services section-padding light"><SectionLabel number="02">OUR SERVICES</SectionLabel><div className="section-intro"><h2>DESIGN. BUILD.<br/>POWER. DELIVER.</h2><p>Creative ideas meet technical expertise.<br/>Every part of your production, considered.</p></div><ServiceGrid items={servicePages.slice(0,11)}/><a className="button dark section-end-link" href="/services">EXPLORE ALL SERVICES <ArrowUpRight size={19}/></a></section><BuildYourEvent startProject={startProject}/><FeaturedWork/><ProductionCapabilities/><WhyTM/><CTASection startProject={startProject}/></>;
 }

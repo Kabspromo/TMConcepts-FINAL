@@ -1,0 +1,7 @@
+export const workVideoSources = [
+  {id:'conference-environment',file:'WhatsApp Video 2026-09-30 at 2.24.57 PM.mp4',title:'The conference environment',category:'CONFERENCE PRODUCTION',description:'A walk across a TM Concepts conference setup, with a presentation screen, branded podium and panel seating.',posterTime:7,featured:true},
+  {id:'wedding-production',file:'WhatsApp Video 2026-09-30 at 2.24.57 PM (3).mp4',title:'A wedding, brought to life',category:'WEDDING PRODUCTION',description:'Reception seating, a white aisle, overhead lighting and a TM Concepts screen within a wedding venue.',posterTime:18,featured:true},
+  {id:'presentation-stage',file:'WhatsApp Video 2026-09-30 at 2.24.57 PM (1).mp4',title:'Ready for the presentation',category:'AV / LED / STAGING',description:'A presentation stage with a World Intellectual Property Day display, speaker podium and panel chairs.',posterTime:6.5,featured:true},
+  {id:'banquet-environment',file:'WhatsApp Video 2026-09-30 at 2.24.57 PM (2).mp4',title:'An evening, set in place',category:'EVENT ENVIRONMENTS',description:'Dressed dining tables and covered chairs facing a stage with three coordinated presentation screens.',posterTime:1.1,featured:true},
+  {id:'paediatric-conference',file:'WhatsApp Video 2026-09-30 at 2.24.58 PM.mp4',title:'The conference stage',category:'CONFERENCE PRODUCTION',description:'A paediatric conference stage with a wide presentation backdrop, branded podium and panel microphones.',posterTime:3.7,featured:false},
+];

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { ArrowUpRight, ArrowRight, Pause, Play } from 'lucide-react';
-import { clientShowcase, impact, homepageServices, media } from './homeContent';
+import { clientShowcase, impact, homepageServices, media, workVideos } from './homeContent';
 import { projects, WHATSAPP } from './data';
 
 function Label({ children, right }) {
@@ -84,6 +84,59 @@ export function ExperienceFilm({ source = media.showreel, design = false }) {
   const ref=useRef(null); const [playing,setPlaying]=useState(false); const [error,setError]=useState(false);
   const play=()=>ref.current.play().catch(()=>setError(true));
   return <section className="experience-film section-padding" aria-labelledby={design?'design-film-heading':'film-heading'}><Label>{design?'DESIGN IN MOTION':'FEEL THE ATMOSPHERE'} <span className="film-hd">FULL HD</span></Label><div className="section-intro"><h2 id={design?'design-film-heading':'film-heading'}>{design?<>DESIGN COMES TO LIFE.<br/><span className="muted">BEFORE SHOWTIME.</span></>:<>SOME THINGS<br/><span className="muted">HAVE TO BE FELT.</span></>}</h2><p>{design?'See an event vision move from concept into a live experience.':<>Light. Sound. Energy.<br/>A glimpse of the experiences we build for.</>}</p></div><div className={`experience-film-player ${playing?'is-playing':''}`}><video ref={ref} src={source.src} poster={source.poster} controls={playing} muted playsInline preload="none" aria-label={design?'TM Concepts design video':'Illustrative event showreel'} onPlay={()=>{setPlaying(true);setError(false);}} onEnded={()=>setPlaying(false)} onError={()=>setError(true)}/>{!playing&&<button className="film-play-overlay" onClick={play} aria-label={design?'Play Design page video':'Play event showreel'}><span className="film-play-circle"><Play size={31} fill="currentColor"/></span><span>PLAY THE EXPERIENCE <ArrowUpRight size={15}/></span></button>}{error&&<p className="video-error" role="status">This video could not play. <a href={source.src}>Open the video directly</a>.</p>}<span className="film-corner-label" aria-hidden="true">TM / IN MOTION</span></div><div className="film-caption"><span>{design?'TM CONCEPTS / DESIGN FILM':'STOCK FOOTAGE / PREVIEW SHOWREEL'}</span><span>YOUR VISION. BROUGHT TO LIFE.</span></div></section>;
+}
+
+export function VideoShowcase({ heading = 'TM IN MOTION', intro = 'From setup to showtime, explore real moments from TM Concepts productions, installations and live events.' }) {
+  const [activeVideo, setActiveVideo] = useState(null);
+  const shouldAutoplay = () => {
+    const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const saveData = navigator.connection && navigator.connection.saveData;
+    return !reduceMotion && !saveData;
+  };
+
+  useEffect(() => {
+    if (!activeVideo) return;
+    const onKey = (event) => {
+      if (event.key === 'Escape') setActiveVideo(null);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [activeVideo]);
+
+  return <section className="video-showcase" aria-labelledby="video-showcase-heading">
+    <div className="section-label"><span><i/>{'TM IN MOTION'}</span></div>
+    <div className="section-intro video-intro"><h2 id="video-showcase-heading">SEE THE EXPERIENCE<br/><span className="muted">IN ACTION.</span></h2><div><p>{intro}</p></div></div>
+    <div className="video-grid">{workVideos.slice(0, 6).map((video, index) => <VideoCard key={video.id} video={video} index={index} onOpen={setActiveVideo} canAutoplay={shouldAutoplay()}/>)}</div>
+    {activeVideo && <div className="video-lightbox" role="dialog" aria-modal="true" aria-label={activeVideo.title} onClick={() => setActiveVideo(null)}><div className="video-lightbox-panel" onClick={(event) => event.stopPropagation()}><button type="button" className="video-close" onClick={() => setActiveVideo(null)} aria-label="Close video">×</button><video controls playsInline autoPlay muted src={activeVideo.src} aria-label={activeVideo.title}/></div></div>}
+  </section>;
+}
+
+function VideoCard({ video, index, onOpen, canAutoplay }) {
+  const ref = useRef(null);
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    const element = ref.current;
+    if (!element) return;
+    const observer = new IntersectionObserver((entries) => {
+      const entry = entries[0];
+      if (!entry) return;
+      if (entry.isIntersecting && canAutoplay) {
+        element.muted = true;
+        element.play().catch(() => {});
+      } else {
+        element.pause();
+      }
+    }, { threshold: 0.35 });
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [canAutoplay]);
+
+  return <button type="button" className={`video-card ${video.orientation}`} onClick={() => onOpen(video)} aria-label={`Play ${video.title}`} style={{'--video-index': index}}>
+    <video ref={ref} muted playsInline loop preload="metadata" onLoadedData={() => setReady(true)} src={video.src} aria-hidden="true"/>
+    {!ready && <span className="video-fallback" aria-hidden="true"><span className="video-fallback-mark">TM</span></span>}
+    <span className="video-overlay"><span className="video-category">{video.category}</span><span className="video-play"><Play size={18} fill="currentColor"/></span></span>
+  </button>;
 }
 
 export function DesignFilm() {
