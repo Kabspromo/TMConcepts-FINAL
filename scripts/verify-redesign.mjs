@@ -61,8 +61,8 @@ try{
   const slider=page.getByRole('slider',{name:'Compare event design and final visualisation'});
   await slider.focus();await slider.press('ArrowRight');check('Comparison is keyboard adjustable',await slider.inputValue()==='51');
   await goto('/about');
-  await page.getByRole('tab',{name:/Understand/}).focus();await page.keyboard.press('ArrowRight');
-  check('Process tabs support arrow keys',await page.getByRole('tab',{name:/Design/}).getAttribute('aria-selected')==='true');
+  await page.getByRole('tab',{name:/Idea/}).focus();await page.keyboard.press('ArrowRight');
+  check('Process tabs support arrow keys',await page.getByRole('tab',{name:/Space planning/}).getAttribute('aria-selected')==='true');
   await goto('/work');
   for(const filter of workFilters){
     await page.getByRole('button',{name:filter,exact:true}).click();
@@ -126,7 +126,8 @@ try{
   console.log('PASS '+results.length+' checks; '+routes.length+' page accessibility audits; zero runtime errors.');
   await writeFile('artifacts/redesign/results.json',JSON.stringify({passed:results.length,checks:results,errors,accessibility},null,2));
 }catch(error){
-  await page.screenshot({path:'artifacts/redesign/failure.jpg',quality:70,fullPage:true});
+  console.error('Verification failed:',error.message,'at',page.url());
   await writeFile('artifacts/redesign/failure.json',JSON.stringify({message:error.message,url:page.url(),errors,accessibility},null,2));
+  await page.screenshot({path:'artifacts/redesign/failure.jpg',quality:70,timeout:10000}).catch(()=>{});
   throw error;
 }finally{await browser.close();}

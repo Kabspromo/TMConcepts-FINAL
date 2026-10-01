@@ -1,0 +1,190 @@
+[
+  {
+    "slug": "event-design-3d-visualisation",
+    "folder": "design",
+    "file": "event-design",
+    "local": "public/images/design/event-visualised-1600.webp",
+    "kind": "render",
+    "caption": "TM CONCEPTS / 3D EVENT CONCEPT",
+    "alt": "Furnished 3D event design with conference seating, lounge sofas, cocktail tables, stage, LED and truss",
+    "position": "50% 50%"
+  },
+  {
+    "slug": "technical-production",
+    "folder": "technical-production",
+    "file": "show-operator",
+    "stock": "show-operator",
+    "crop": {
+      "left": 0,
+      "top": 700,
+      "width": 1600,
+      "height": 1400
+    },
+    "alt": "Live event technician operating control consoles beside production road cases",
+    "position": "50% 55%",
+    "mobilePosition": "58% 55%"
+  },
+  {
+    "slug": "audio-visual",
+    "folder": "av",
+    "file": "conference-av",
+    "video": "WhatsApp Video 2026-09-30 at 2.24.57 PM (1).mp4",
+    "ratio": 0.55,
+    "kind": "tm",
+    "caption": "TM CONCEPTS / CONFERENCE AV",
+    "alt": "Conference presentation screens, digital stage display and speaker podium at a supplied TM Concepts event",
+    "position": "50% 57%",
+    "mobilePosition": "50% 57%"
+  },
+  {
+    "slug": "audio-systems",
+    "folder": "audio",
+    "file": "line-array",
+    "stock": "line-array",
+    "alt": "Professional line-array loudspeakers suspended outdoors for an event",
+    "position": "50% 45%",
+    "mobilePosition": "50% 45%"
+  },
+  {
+    "slug": "led-screens",
+    "folder": "led",
+    "file": "rotary-led-wall",
+    "local": "public/images/projects/rotary-installation-1280.webp",
+    "kind": "tm",
+    "caption": "TM CONCEPTS / ROTARY MUYENGA BUKASA INSTALLATION",
+    "alt": "Operating LED backdrop displaying Rotary Muyenga Bukasa presidential installation graphics",
+    "position": "50% 30%",
+    "mobilePosition": "55% 30%"
+  },
+  {
+    "slug": "event-lighting",
+    "folder": "lighting",
+    "file": "lighting-beams",
+    "stock": "lighting-beams",
+    "alt": "Suspended event lighting fixture casting multiple beams through haze",
+    "position": "55% 40%",
+    "mobilePosition": "60% 40%"
+  },
+  {
+    "slug": "power-solutions",
+    "folder": "power",
+    "file": "generator",
+    "stock": "generator",
+    "crop": {
+      "left": 0,
+      "top": 650,
+      "width": 1600,
+      "height": 1700
+    },
+    "alt": "Industrial generator with an open electrical distribution panel and power connections",
+    "position": "50% 56%",
+    "mobilePosition": "50% 56%"
+  },
+  {
+    "slug": "staging-structures",
+    "folder": "staging",
+    "file": "rotary-stage-platform",
+    "local": "public/images/projects/rotary-stage-1280.webp",
+    "crop": {
+      "left": 0,
+      "top": 360,
+      "width": 1280,
+      "height": 493
+    },
+    "kind": "tm",
+    "caption": "TM CONCEPTS / ROTARY STAGE & RUNWAY",
+    "alt": "Raised white stage platform and runway at the Rotary Muyenga Bukasa installation",
+    "position": "50% 60%",
+    "mobilePosition": "50% 65%"
+  },
+  {
+    "slug": "trussing-rigging",
+    "folder": "trussing",
+    "file": "overhead-truss-rig",
+    "stock": "truss-rig",
+    "alt": "Interconnected overhead truss structures supporting suspended lighting and display equipment",
+    "position": "50% 48%",
+    "mobilePosition": "50% 48%"
+  },
+  {
+    "slug": "event-branding-signage",
+    "folder": "branding",
+    "file": "rotary-podium-branding",
+    "local": "public/images/projects/rotary-presentation-1280.webp",
+    "kind": "tm",
+    "caption": "TM CONCEPTS / ROTARY PODIUM BRANDING",
+    "alt": "Rotary-branded speaker podium with matching event identity and signage",
+    "position": "50% 68%",
+    "mobilePosition": "50% 70%"
+  },
+  {
+    "slug": "event-furniture-rentals",
+    "folder": "furniture",
+    "file": "banquet-furniture",
+    "video": "WhatsApp Video 2026-09-30 at 2.24.57 PM (2).mp4",
+    "ratio": 0.05,
+    "crop": {
+      "left": 0,
+      "top": 100,
+      "width": 640,
+      "height": 260
+    },
+    "kind": "tm",
+    "caption": "TM CONCEPTS / BANQUET FURNITURE SETUP",
+    "alt": "Covered banquet chairs and dressed dining tables arranged for an actual TM Concepts event",
+    "position": "50% 60%",
+    "mobilePosition": "50% 60%"
+  },
+  {
+    "slug": "conference-production",
+    "folder": "conference",
+    "file": "paediatric-conference",
+    "local": "public/images/projects/paediatric-conference-1280.webp",
+    "kind": "tm",
+    "caption": "TM CONCEPTS / PAEDIATRIC CONFERENCE",
+    "alt": "Paediatric conference stage with presentation screen, panel seating, microphones and branded podium",
+    "position": "50% 50%",
+    "mobilePosition": "50% 50%"
+  },
+  {
+    "slug": "concerts-live-events",
+    "folder": "concerts",
+    "file": "nairobi-concert",
+    "stock": "nairobi-concert",
+    "alt": "Audience facing a Nairobi concert stage with LED screens, trussing and blue stage lighting",
+    "position": "50% 45%",
+    "mobilePosition": "50% 45%"
+  },
+  {
+    "slug": "weddings",
+    "folder": "weddings",
+    "file": "wedding-production",
+    "video": "WhatsApp Video 2026-09-30 at 2.24.57 PM (3).mp4",
+    "ratio": 0.55,
+    "kind": "tm",
+    "caption": "TM CONCEPTS / WEDDING PRODUCTION",
+    "alt": "Supplied wedding venue setup with reception seating, white runway, overhead lighting and TM Concepts display",
+    "position": "50% 68%",
+    "mobilePosition": "52% 70%"
+  },
+  {
+    "slug": "nightlife",
+    "folder": "nightlife",
+    "file": "nairobi-club",
+    "stock": "nairobi-nightlife",
+    "alt": "Nairobi club environment with a DJ booth, digital backdrop, mirror balls and coloured event lighting",
+    "position": "50% 55%",
+    "mobilePosition": "50% 55%"
+  },
+  {
+    "slug": "corporate-events",
+    "folder": "corporate",
+    "file": "rotary-awards",
+    "local": "public/images/projects/rotary-awards-1280.webp",
+    "kind": "tm",
+    "caption": "TM CONCEPTS / ROTARY PRESIDENTIAL INSTALLATION",
+    "alt": "Corporate award presentation on a branded Rotary event stage",
+    "position": "50% 50%",
+    "mobilePosition": "50% 50%"
+  }
+]

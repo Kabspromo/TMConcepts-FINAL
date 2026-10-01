@@ -13,7 +13,9 @@
     "media:prepare": "node scripts/prepare-media.mjs",
     "test:legacy": "node scripts/verify.mjs && node scripts/verify-homepage.mjs",
     "media:homepage": "node scripts/prepare-homepage-media.mjs",
-    "media:design": "node scripts/render-event-scene.mjs"
+    "media:design": "node scripts/render-event-scene.mjs",
+    "media:services": "node scripts/prepare-service-media.mjs",
+    "test:services": "node scripts/verify-service-about.mjs"
   },
   "dependencies": {
     "jspdf": "^4.2.1",

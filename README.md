@@ -18,7 +18,7 @@ npm run preview
 
 Production preview: http://127.0.0.1:4173
 
-The build pre-renders 25 pages plus 404, with unique metadata, social cards, canonical URLs, structured data, sitemap and robots.txt. React hydrates the interactions. The existing framework, Vercel configuration, production domain and Git remote are preserved. This work has not been deployed.
+The build pre-renders 26 pages plus 404, with unique metadata, social cards, canonical URLs, structured data, sitemap and robots.txt. React hydrates the interactions. The existing framework, Vercel configuration, production domain and Git remote are preserved. This work has not been deployed.
 
 ## Edit the homepage
 
@@ -27,6 +27,8 @@ The build pre-renders 25 pages plus 404, with unique metadata, social cards, can
 - **src/StageLightAmbient.jsx** — reusable decorative stage beams.
 - **src/homepage-polish.css** — homepage typography, editorial layout, animated borders, logo strip and responsive rules.
 - **src/content.js** — services, project collection, media metadata, comparison pair, contact details and legacy URL aliases.
+- **src/serviceImagery.js** — service-specific image metadata, focal points and source credits shared by every service view.
+- **src/aboutContent.js** and **src/AboutStory.jsx** — approved company story, six-stage journey, mission, vision and leadership.
 - **src/inventory.js** — equipment and furniture categories.
 - **src/components.jsx** — shared navigation, media, cards, comparison, work marquee, process, CTA and footer.
 - **src/ProjectBuilder.jsx** — enquiry steps, rental quantities, local attachments, brief download and WhatsApp handoff.
@@ -39,7 +41,7 @@ The hero advances every six seconds, crossfades and supports swipe and keyboard 
 
 See PHOTOGRAPHY.md for source details and replacement instructions.
 
-The event portfolio uses six supplied Rotary installation photographs and stills extracted from three supplied event videos. No AI-generated event images are used. Neutral TM panels handle missing or failed media without exposing editing instructions. Client logos come from the existing supplied logo folder.
+The event portfolio uses six supplied Rotary installation photographs and stills extracted from three supplied event videos. No AI-generated event images are used. Service illustrations additionally use seven locally hosted licensed photographs, clearly credited and kept out of the project portfolio. Neutral TM panels handle missing or failed media without exposing editing instructions. See SERVICE-IMAGE-AUDIT.md for the service-by-service mapping and licenses. Client logos come from the existing supplied logo folder.
 
 The comparison is a matched pair rendered from one furnished 3D scene: sofas, cocktail tables, conference chairs, stage, LED display, speakers, lights, truss and plants. Both views use the same model and camera. It is clearly labelled as design and final visualization, not as a completed event photograph. Three.js is a **development-only** rendering tool; it is not shipped in the website JavaScript.
 
@@ -51,11 +53,14 @@ Manrope is locally hosted as a 54 KB WOFF2 under the SIL Open Font License. Icon
 npm run media:prepare
 npm run media:homepage
 npm run media:design
+npm run media:services
 ~~~
 
 The first command regenerates responsive versions of the six original photographs. The homepage command extracts video stills, prepares four hero files and optimizes supplied client logos. It requires the dev server on port 5173 and the original local uploads. It recreates the initial hero images, so do not run it over manually replaced hero files.
 
 The design command also requires the dev server on port 5173. It renders scripts/event-scene.mjs through Chrome into static WebP pairs. Runtime pages never load the rendering code.
+
+The service command regenerates the selected real service photographs from the documented source records and client video frames. It requires the dev server on port 5173; verified stock originals are downloaded only when absent from the local cache. See SERVICE-IMAGE-AUDIT.md for attribution and licensing details.
 
 The production asset allowlist copies approved image folders and fonts. Original WhatsApp videos, large source uploads and development rendering scripts stay out of dist.
 
@@ -72,9 +77,10 @@ With the production preview running:
 ~~~sh
 npm test
 npm run test:homepage
+npm run test:services
 ~~~
 
-The main suite checks all 25 routes at 360, 375, 390, 412, 430, 768, 1024, 1440 and 1920 px, static SEO, loaded media, WCAG A/AA audits, navigation, legacy URLs, work filters, process tabs, rental search and quantities, enquiry validation, attachments, downloads and WhatsApp URL content.
+The main suite checks all 26 routes at 360, 375, 390, 412, 430, 768, 1024, 1440 and 1920 px, static SEO, loaded media, WCAG A/AA audits, navigation, legacy URLs, work filters, process tabs, rental search and quantities, enquiry validation, attachments, downloads and WhatsApp URL content.
 
 The homepage suite additionally exercises autoplay and pause behavior, real touch swipe, mouse/touch/keyboard comparison controls, counters, logo loops, reduced motion, CTA behavior, exact mobile typography bounds and finished public copy. No messages are sent.
 

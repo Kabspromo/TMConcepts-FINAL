@@ -1,6 +1,6 @@
 # Photography and visual content
 
-All event photography comes from inspected files supplied in the workspace. Do not infer event dates, exact venues, client testimonials or equipment models from these images.
+The project portfolio uses inspected files supplied in the workspace. Service illustrations also use selected licensed real photographs, clearly distinguished from TM Concepts work. See SERVICE-IMAGE-AUDIT.md for every source and license. Do not infer event dates, exact venues, client testimonials or equipment models from these images.
 
 ## Current sources
 
@@ -50,7 +50,7 @@ A future comparison must use two genuinely matching views. Do not substitute an 
 
 Approved production folders are public/images/projects, services, equipment, team, about, design, hero and clients/optimized. The production build copies these folders automatically.
 
-Add a media entry in **src/content.js**:
+For portfolio photographs and inventory, add a media entry in **src/content.js**:
 
 ~~~js
 generator: {
@@ -63,7 +63,7 @@ generator: {
 }
 ~~~
 
-Set a service or inventory item's photo to this media key, or assign it to a named slot in slotMedia. Missing subjects currently use neutral branded panels, including generators, standalone audio and truss equipment, crew, office and CEO portrait. This is intentional and publishes no editing instructions.
+Set an inventory item's photo to this media key, or assign it to a named slot in slotMedia. Crew, office, CEO portrait and unavailable inventory photographs retain neutral branded panels without editing instructions. Service imagery is maintained separately in **src/serviceImagery.js** and attached by service slug in src/content.js. Update the source records in scripts/service-media-sources.json before regeneration. See SERVICE-IMAGE-AUDIT.md for exact mappings, crops and stock licenses; service cards now have a relevant photograph or the existing design render.
 
 Use actual approved photographs for the CEO, crew, office and stocked equipment. The design render is an illustration of the visualization service, not proof of an equipment model in stock.
 
